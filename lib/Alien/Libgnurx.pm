@@ -22,6 +22,11 @@ __END__
 
 =pod
 
+=head1 DESCRIPTION
+
+This module installs C<libgnurx> which is a port of the POSIX regex functions
+for Windows that comes from the MinGW project.
+
 =head1 Inline support
 
 This module supports L<Inline's with functionality|Inline/"Playing 'with' Others">.

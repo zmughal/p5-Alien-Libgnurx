@@ -3,7 +3,18 @@ package Alien::Libgnurx::ModuleBuild;
 use strict;
 use warnings;
 
+use parent 'Alien::Base::ModuleBuild';
 use File::Spec;
+use Alien::MSYS;
+
+sub alien_do_commands {
+	my ($self, $phase) = @_;
+	if( $^O eq 'MSWin32' ) {
+		Alien::MSYS::msys( sub {
+			$self->SUPER::alien_do_commands($phase);
+		});
+	}
+}
 
 package
 	main;
