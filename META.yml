@@ -1,0 +1,34 @@
+---
+abstract: 'Alien package for the libgnurx library for MinGW'
+author:
+  - 'Zakariyya Mughal <zmughal@cpan.org>'
+build_requires:
+  Alien::LibMagic: 0
+  Module::Load: 0
+  Test::More: 0
+  perl: 5.006
+configure_requires:
+  Alien::Base: 0.005
+  File::ShareDir: 1.03
+  perl: 5.006
+dynamic_config: 1
+generated_by: 'Dist::Zilla version 5.029, CPAN::Meta::Converter version 2.143240'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Alien-Libgnurx
+no_index:
+  directory:
+    - inc
+requires:
+  Alien::Base: 0.005
+  File::ShareDir: 1.03
+  parent: 0
+  perl: 5.006
+  strict: 0
+  warnings: 0
+resources:
+  homepage: https://github.com/zmughal/p5-Alien-Libgnurx
+  repository: https://github.com/zmughal/p5-Alien-Libgnurx.git
+version: 0.001
