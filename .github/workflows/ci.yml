@@ -7,10 +7,10 @@ on:
   pull_request:
 
 env:
-  PKG_NAME: «TODO»
-  PKG_UBUNTU: «TODO»
-  PKG_HOMEBREW: «TODO»
-  PKG_MSYS2_MINGW64: «TODO»
+  PKG_NAME: Libgnurx
+  PKG_UBUNTU: ''
+  PKG_HOMEBREW: ''
+  PKG_MSYS2_MINGW64: mingw-w64-x86_64-libgnurx
   PKG_MSYS2_MINGW64_DEPS: >-
     base-devel
     unzip
@@ -70,18 +70,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-        perl-version: ['5.8', '5.20', '5.30', '5.34']
-        alien-install-type: [ 'system', 'share' ]
         include:
           # Windows strawberry     | share
           - { perl-version: '5.34' , os: windows-latest , dist: strawberry , alien-install-type: 'share'                                  }
           # Windows msys2          | system, share
           - { perl-version: '5.34' , os: windows-latest , dist: msys2      , alien-install-type: 'system'                                 }
           - { perl-version: '5.34' , os: windows-latest , dist: msys2      , alien-install-type: 'share'                                  }
-          # macOS                  | system, share
-          - { perl-version: '5.34' , os: macos-11       ,                    alien-install-type: 'system'                                 }
-          - { perl-version: '5.34' , os: macos-11       ,                    alien-install-type: 'share'                                  }
     name: Perl ${{ matrix.perl-version }} on ${{ matrix.os }} with install-type ${{ matrix.alien-install-type }}, dist ${{ matrix.dist }}
 
     steps:
