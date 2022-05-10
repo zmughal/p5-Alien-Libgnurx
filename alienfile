@@ -1,23 +1,43 @@
 use alienfile;
 
-# replace this with your own system probe.
-# See Alien::Build::Plugin::Probe and
-# Alien::Build::Plugin::PkgConfig for common
-# probe plugins.
 probe sub { 'share' };
+plugin 'Probe::CBuilder' => (
+  libs   => '-lregex',
+);
 
 share {
-  start_url 'http://prdownloads.sourceforge.net/mingw';
+  plugin 'Decode::SourceForge';
+  start_url 'https://sourceforge.net/projects/mingw/files/Other/UserContributed/regex/mingw-regex-2.5.1/';
+  # -src: source files
+  # -dev: include/*.h and lib/*.a files
+  # -bin: bin/*.dll
+  my $type = '-dev';
   plugin Download => (
-    filter  => qr/^mingw.*tar\.gz$/,
+    filter  => qr/^mingw-libgnurx-.*$type\.tar\.gz$/,
     version => qr/([0-9\.]+)/,
   );
   plugin Extract => 'tar.gz';
-  plugin 'Build::Autoconf';
-  build [
-    '%{configure} --enable-static --disable-shared',
-    '%{make}',
-    '%{make} install',
-  ];
-  plugin 'Gather::IsolateDynamic';
+  if( $type eq '-dev' ) {
+    plugin 'Build::Copy';
+    gather sub {
+      my($build) = @_;
+      my $prefix = $build->runtime_prop->{prefix};
+
+      my $cflags = "-I$prefix/include";
+      my $libs = "-L$prefix/lib";
+
+      for my $type ('', '_static') {
+	$build->runtime_prop->{"cflags$type"} = $cflags;
+	$build->runtime_prop->{"libs$type"}   = $libs;
+      }
+    };
+  } elsif( $type eq '-src' ) {
+    plugin 'Build::Autoconf';
+    build [
+      '%{configure} --enable-static --disable-shared',
+      '%{make}',
+      '%{make} install',
+    ];
+    plugin 'Gather::IsolateDynamic';
+  }
 }
