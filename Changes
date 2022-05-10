@@ -1,2 +1,4 @@
-0.001 2014-09-13 02:25:25-0500
-  - first version
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
+  - initial version
